@@ -2,250 +2,224 @@
 <html lang="uz">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Nigina -  Faqat Sen Uchun</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=IM+Fell+English+SC&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-night: #0b001f;
-            --bg-gradient: linear-gradient(135deg, #0b001f 0%, #1c003c 50%, #140026 100%);
-            --accent-glow: #ffccff;
-            --text-primary: #f8f0ff;
-            --text-secondary: #d0b8e8;
-            --panel-bg: rgba(20, 10, 40, 0.58);
-            --border-glow: rgba(255, 204, 255, 0.35);
-            --shadow-glow: 0 0 50px rgba(255, 204, 255, 0.3);
+            --bg-void: #0a0a0a;
+            --paper: #111111;
+            --ink-black: #000000;
+            --ink-shadow: #1a1a1a;
+            --text-main: #f4f4f4;
+            --text-mute: #b5b5b5;
+            --accent-silver: #d8d0c8;
+            --border-ink: #2e2e2e;
+            --border-glow: #505050;
+            --shadow-etch: 0 12px 48px rgba(0,0,0,0.92);
+            --glow-etch: 0 0 24px rgba(216,208,200,0.08);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
             min-height: 100vh;
             font-family: 'EB Garamond', serif;
-            background: var(--bg-gradient);
-            color: var(--text-primary);
+            background: var(--bg-void);
+            color: var(--text-main);
+            background-image: 
+                radial-gradient(circle at 50% 50%, rgba(0,0,0,0.88) 0%, transparent 75%),
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400"><filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="4"/><feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.035 0"/></filter><rect width="100%" height="100%" filter="url(#grain)" opacity="0.12"/></svg>');
+            background-attachment: fixed;
+            line-height: 1.82;
+            font-size: 1.14rem;
             overflow-x: hidden;
-            position: relative;
-            line-height: 1.85;
-            font-size: 1.12rem;
-        }
-
-        #stars {
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .star {
-            position: absolute;
-            background: white;
-            border-radius: 50%;
-            box-shadow: 0 0 8px white;
-            opacity: 0.6;
-            animation: twinkle 6s infinite alternate;
-        }
-
-        @keyframes twinkle {
-            0%,100% { opacity: 0.5; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.3); }
-        }
-
-        #petals-container {
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .sakura-petal {
-            position: absolute;
-            width: 22px;
-            height: 22px;
-            background: linear-gradient(135deg, #ffe6f2, #ffb3de, #ff99cc);
-            border-radius: 50% 40% 60% 50%;
-            opacity: 0.75;
-            box-shadow: 0 0 20px rgba(255, 179, 222, 0.7);
-            animation: fall-sakura 22s linear infinite;
-        }
-
-        @keyframes fall-sakura {
-            0% {
-                transform: translateY(-15vh) rotate(0deg) translateX(0);
-                opacity: 0.85;
-            }
-            100% {
-                transform: translateY(130vh) rotate(1440deg) translateX(35vw);
-                opacity: 0;
-            }
+            -webkit-font-smoothing: antialiased;
         }
 
         #vignette {
             position: fixed;
             inset: 0;
             pointer-events: none;
-            background: radial-gradient(ellipse at 50% 50%, transparent 30%, rgba(11,0,31,0.88) 100%);
-            z-index: 2;
+            background: radial-gradient(ellipse at 50% 50%, transparent 30%, rgba(0,0,0,0.94) 100%);
+            z-index: 1;
+        }
+
+        #ink-lines {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .ink-line {
+            position: absolute;
+            width: 1.8px;
+            height: 18px;
+            background: var(--accent-silver);
+            opacity: 0.18;
+            transform-origin: top;
+            animation: drift-ink 24s linear infinite;
+        }
+
+        @keyframes drift-ink {
+            0%   { transform: translateY(-120vh) rotate(0deg) translateX(0); opacity: 0.25; }
+            100% { transform: translateY(140vh) rotate(1080deg) translateX(60vw); opacity: 0; }
         }
 
         .container {
             position: relative;
-            z-index: 3;
-            max-width: 980px;
+            z-index: 2;
+            max-width: 920px;
             margin: 0 auto;
-            padding: 7rem 4rem 12rem;
+            padding: 4rem 1.8rem 9rem;
         }
 
         .panel {
-            background: var(--panel-bg);
-            backdrop-filter: blur(14px) saturate(180%);
-            border: 1px solid var(--border-glow);
-            border-radius: 18px;
-            padding: 5.5rem 5.5rem;
-            box-shadow: var(--shadow-glow), inset 0 0 90px rgba(0,0,0,0.75);
-            margin: 5rem 0;
-            transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
-            animation: panelFade 2.5s ease-out;
-        }
-
-        @keyframes panelFade {
-            from { opacity: 0; transform: translateY(60px); }
-            to   { opacity: 1; transform: translateY(0); }
+            background: var(--paper);
+            border: 1px solid var(--border-ink);
+            border-radius: 10px;
+            padding: 3.5rem 2.8rem;
+            box-shadow: var(--shadow-etch), inset 0 0 70px rgba(0,0,0,0.88);
+            margin: 3rem 0;
+            transition: all 0.65s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
         .panel:hover {
-            transform: translateY(-12px);
-            box-shadow: 0 0 100px rgba(255,204,255,0.5), inset 0 0 140px rgba(0,0,0,0.85);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 70px rgba(0,0,0,1), inset 0 0 100px rgba(0,0,0,0.92);
         }
 
         h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 5.4rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            text-shadow: 0 0 40px var(--accent-glow), 0 0 80px rgba(255,204,255,0.5);
+            font-family: 'IM Fell English SC', serif;
+            font-size: 4.2rem;
+            color: var(--accent-silver);
+            text-shadow: 0 4px 18px #000;
             text-align: center;
-            letter-spacing: 3.5px;
-            margin-bottom: 1.6rem;
-            animation: glowPulse 7s infinite alternate;
-        }
-
-        @keyframes glowPulse {
-            0% { text-shadow: 0 0 25px var(--accent-glow); }
-            100% { text-shadow: 0 0 70px var(--accent-glow), 0 0 120px rgba(255,204,255,0.6); }
+            letter-spacing: 2.2px;
+            margin-bottom: 1.2rem;
         }
 
         h2 {
             font-family: 'Playfair Display', serif;
-            font-size: 3.4rem;
-            color: var(--text-accent);
-            text-shadow: 0 0 25px var(--accent-glow);
-            border-bottom: 1px solid rgba(255,204,255,0.35);
-            padding-bottom: 1.4rem;
-            margin: 6rem 0 3rem;
-            letter-spacing: 1.8px;
+            font-size: 2.8rem;
+            color: var(--accent-silver);
+            text-shadow: 0 2px 12px #000;
+            border-bottom: 1px solid #3a3a3a;
+            padding-bottom: 1rem;
+            margin: 4.5rem 0 2rem;
+            letter-spacing: 1.3px;
         }
 
         .subtitle {
-            font-family: 'Cormorant Garamond', serif;
             font-style: italic;
-            font-size: 1.7rem;
             color: var(--text-secondary);
             text-align: center;
-            margin: 2.5rem 0 6rem;
-            opacity: 0.94;
+            font-size: 1.35rem;
+            margin: 1.5rem 0 4rem;
+            opacity: 0.88;
         }
 
         .story-block {
-            margin: 4rem 0;
-            padding: 3rem 3.8rem;
-            background: rgba(30,20,50,0.65);
-            border-left: 7px solid rgba(255,204,255,0.45);
-            border-radius: 12px;
+            margin: 2.8rem 0;
+            padding: 2rem 2.6rem;
+            background: rgba(28,28,28,0.68);
+            border-left: 5px solid #585858;
+            border-radius: 6px;
             position: relative;
-            transition: all 0.6s ease;
-            animation: blockFade 2s ease-out;
-        }
-
-        @keyframes blockFade {
-            from { opacity: 0; transform: translateX(-40px); }
-            to   { opacity: 1; transform: translateX(0); }
+            transition: all 0.45s ease;
         }
 
         .story-block:hover {
-            background: rgba(40,30,60,0.8);
-            border-left-color: var(--accent-glow);
-            transform: translateX(18px);
+            background: rgba(38,38,38,0.78);
+            border-left-color: #808080;
+            transform: translateX(10px);
+        }
+
+        .story-block::before {
+            content: "";
+            position: absolute;
+            left: -10px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(transparent, #999, transparent);
         }
 
         strong {
-            color: var(--text-accent);
+            color: #d8d0c8;
             font-weight: 600;
         }
 
         .btn {
-            background: linear-gradient(145deg, #2a004d, #4a0080);
-            color: #ffe6ff;
-            border: 1px solid rgba(255,204,255,0.45);
-            padding: 20px 56px;
-            margin: 1.8rem 2.5rem;
-            border-radius: 50px;
-            font-size: 1.3rem;
-            font-family: 'EB Garamond', serif;
+            background: linear-gradient(145deg, #181818, #242424);
+            color: #e0e0e0;
+            border: 1px solid #4a4a4a;
+            padding: 18px 44px;
+            margin: 1.4rem auto;
+            border-radius: 8px;
+            font-size: 1.18rem;
             cursor: pointer;
-            transition: all 0.55s cubic-bezier(0.23,1,0.32,1);
-            box-shadow: 0 0 40px rgba(255,204,255,0.35);
+            transition: all 0.45s cubic-bezier(0.23,1,0.32,1);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.9);
+            width: 100%;
+            max-width: 340px;
+            display: block;
         }
 
         .btn:hover {
-            background: linear-gradient(145deg, #4a0080, #6a00b3);
-            border-color: var(--accent-glow);
-            transform: translateY(-7px) scale(1.06);
-            box-shadow: 0 0 80px rgba(255,204,255,0.7);
+            background: linear-gradient(145deg, #242424, #303030);
+            border-color: #707070;
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0,0,0,1);
         }
 
         input {
-            background: rgba(10,5,20,0.85);
-            border: 1px solid rgba(255,204,255,0.35);
-            color: #ffe6ff;
-            padding: 20px 26px;
-            margin: 1.8rem 0;
+            background: #0c0c0c;
+            border: 1px solid #383838;
+            color: #e0e0e0;
+            padding: 18px 20px;
+            margin: 1.4rem 0;
             width: 100%;
-            border-radius: 14px;
-            font-size: 1.3rem;
-            transition: all 0.45s;
-        }
-
-        input:focus {
-            outline: none;
-            border-color: var(--accent-glow);
-            box-shadow: 0 0 40px rgba(255,204,255,0.5);
+            border-radius: 8px;
+            font-size: 1.18rem;
         }
 
         #home-buttons {
-            text-align: center;
-            margin-top: 8rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .fade-in {
-            animation: fadeIn 4.5s ease-out;
+            animation: fadeIn 2.8s ease-out;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(60px); }
+            from { opacity: 0; transform: translateY(30px); }
             to   { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 480px) {
+            .container { padding: 2.5rem 1.2rem 7rem; }
+            .panel { padding: 2.5rem 1.8rem; }
+            h1 { font-size: 3.4rem; }
+            h2 { font-size: 2.4rem; }
+            .btn { padding: 16px 36px; font-size: 1.12rem; }
+            .story-block { padding: 1.8rem 1.8rem; }
         }
     </style>
 </head>
 <body>
 
-<div id="stars"></div>
-<div id="petals-container"></div>
 <div id="vignette"></div>
+<div id="ink-lines"></div>
 
 <audio id="music" loop preload="auto">
     <source src="3.mp3" type="audio/mpeg">
@@ -255,14 +229,12 @@
 <div id="login" class="container fade-in">
     <div class="panel">
         <h1>Nigina</h1>
-        <p class="subtitle">Faqat sen uchun... yulduzlar ostida yozilgan hikoya, sukunatda vaqt to'xtagan joyda, har bir so'z -  abadiy lahza</p>
+        <p class="subtitle">Ba’zi uchrashuvlar tasodif emas -  ular taqdirning o‘zi. Sen mening hayotimdagi eng muhim sahifa bo‘lding.</p>
         
         <form id="loginForm">
             <input type="text" id="username" placeholder="Login" autocomplete="off" required>
             <input type="password" id="password" placeholder="Parol" required>
-            <div style="text-align:center; margin-top:4.5rem;">
-                <button type="submit" class="btn">Kirish</button>
-            </div>
+            <button type="submit" class="btn">Sahifani ochish</button>
         </form>
     </div>
 </div>
@@ -270,11 +242,11 @@
 <!-- HOME -->
 <div id="home" class="container" style="display:none;">
     <h1>Nigina -  mening yagona olamim</h1>
-    <p class="subtitle">Ba'zi uchrashuvlar tasodif emas -  ular taqdirning o'zi. Sen mening hayotimga kirib, undagi hamma narsani o'zgartirding. Endi men shunchaki yashamayman -  sen bilan mavjud bo'laman, sen bilan o'ylayman, sen bilan nafas olaman.</p>
+    <p class="subtitle">Inson hayotida ba’zi lahzalar shunchaki o‘tib ketmaydi -  ular ichingda iz qoldirib, keyin har bir nafasda qaytib keladi. Sen shunday iz qoldirding.</p>
 
     <div id="home-buttons">
         <button class="btn" onclick="show('story')">Hikoya</button>
-        <button class="btn" onclick="show('beauty')">Uning go'zalligi</button>
+        <button class="btn" onclick="show('beauty')">Uning go‘zalligi</button>
         <button class="btn" onclick="show('why')">Nega aynan u</button>
         <button class="btn" onclick="show('final')">Och va his qil</button>
     </div>
@@ -284,50 +256,50 @@
 <div id="story" class="section" style="display:none;">
     <div class="panel">
         <h2>Hikoya</h2>
-        <p class="subtitle">Yomg'irli kechadan... yulduzlar ostidagi abadiylikka -  har bir lahza o'ylashga va his qilishga majbur qiladigan yo'l</p>
+        <p class="subtitle">Yomg‘irli kechadan... sukunat va abadiylikka yetib keladigan yo‘l</p>
 
         <div class="story-block">
-            O'sha kecha yomg'ir derazaga ohista urardi -  xuddi qadimiy qog'ozga siyoh tomchilari tushayotgandek, har bir tomchi o'zining kichik, ammo muhim hikoyasini aytardi. Men divanda o'tirib, telefon ekrani oldida jim turardim. Hayotning odatiy monotonligi ichida, qalbimdagi sukunat va cheksiz o'ylar bilan. Soat ikkidan o'tgan edi. Va birdan sening xabaring keldi -  oddiy so'zlar, lekin ular mening ichimdagi sukunatni buzdi, xuddi romanning birinchi sahifasi ochilgandek. Bu xabar mening hayotimga kirib keldi, xuddi tasodifiy, lekin taqdiriy uchrashuv kabi. Men birdan angladimki, bu faqat boshlanishi -  uzoq, chuqur va unutilmas yo'lning birinchi qadami.<br><br>
+            O‘sha kecha yomg‘ir derazaga ohista urardi -  xuddi qadimiy manga sahifasiga siyoh tomchilari tushayotgandek. Men divanda o‘tirib, telefon ekrani oldida jim turardim. Hayotning odatiy sukunati ichida, qalbimdagi cheksiz o‘ylar bilan. Soat ikkidan o‘tgan edi. Va birdan sening xabaring keldi -  oddiy so‘zlar, lekin ular mening ichimdagi sukunatni buzdi, xuddi romanning birinchi sahifasi ochilgandek. Bu xabar mening hayotimga kirib keldi, xuddi tasodifiy, lekin taqdiriy uchrashuv kabi. Men birdan angladimki, bu faqat boshlanishi -  uzoq, chuqur va unutilmas yo‘lning birinchi qadami.<br><br>
             <strong>Nigina:</strong> Salom... hali uxlamadingmi?<br>
-            <strong>Men:</strong> Salom. Yo'q, uxlamayapman. Sen-chi?<br>
-            <strong>Nigina:</strong> Men ham... shunchaki gaplashmoqchi bo'ldim. Ba'zan kecha sukunati juda og'ir bo'lib ketadi, va odam ovozini eshitishni xohlaydi.<br>
-            <strong>Men:</strong> Tushunaman. Gaplashamiz. Men bu yerdaman -  va bu soatlar mening ham eng chuqur o'ylarim, eng ochiq lahzalarim payti.
+            <strong>Men:</strong> Salom. Yo‘q, uxlamayapman. Sen-chi?<br>
+            <strong>Nigina:</strong> Men ham... shunchaki gaplashmoqchi bo‘ldim. Ba’zan kecha sukunati juda og‘ir bo‘lib ketadi.<br>
+            <strong>Men:</strong> Tushunaman. Gaplashamiz. Men bu yerdaman -  va bu soatlar mening ham eng chuqur o‘ylarim payti.
         </div>
 
         <div class="story-block">
-            O'sha suhbatdan keyin kunlar o'tdi -  xuddi romandagi boblar kabi, har biri yangi ochilish va yangi chuqurlik bilan. Har kecha bir xil odat paydo bo'ldi: sen yozasan, men javob beraman. So'zlar asta-sekin chuqurlashdi -  xuddi daryoning oqimi kabi: boshida mayin va sekin, keyin kuchli va to'lqinli. Sen menga kitoblar haqida gapirarding, o'qigan romanlaring, sevimli musiqalaring, yomg'ir ostidagi yolg'iz yurishlaring haqida -  bu lahzalar mening hayotimni to'ldirdi, xuddi xotira kitobidagi eng qimmat sahifalar kabi. Men tinglardim va o'ylardim: nega bunchalik tanish tuyuladi bu ovoz? Xuddi uzoq vaqtdan beri kutgan suhbat, uzoq vaqtdan beri izlagan odam bilan gaplashayotgandek. Har bir so'zing mening ichimdagi bo'shliqni to'ldirardi, har bir sukunat esa yangi ma'no kasb etardi.<br><br>
-            <strong>Nigina:</strong> Bilasanmi, men yolg'izlikni yaxshi ko'raman... lekin ba'zan u meni yeb qo'yayotgandek tuyuladi, va men kimdir bilan chin dildan gaplashishni xohlayman.<br>
-            <strong>Men:</strong> Men ham shunday yashardim -  ko'p odamlar atrofda, lekin hech kim yaqin emas edi. Sukunat ba'zan qo'rquvga aylanardi. Sen paydo bo'lgach... men nihoyat nafas oldim. Sen bilan sukunat ham gapira boshladi -  va bu gaplar chuqur, samimiy va ma'noli.
+            O‘sha suhbatdan keyin kunlar o‘tdi -  xuddi romandagi boblar kabi, har biri yangi ochilish va yangi chuqurlik bilan. Har kecha bir xil odat paydo bo‘ldi: sen yozasan, men javob beraman. So‘zlar asta-sekin chuqurlashdi -  xuddi daryoning oqimi kabi: boshida mayin va sekin, keyin kuchli va to‘lqinli. Sen menga kitoblar haqida gapirarding, o‘qigan romanlaring, sevimli musiqalaring, yomg‘ir ostidagi yolg‘iz yurishlaring haqida -  bu lahzalar mening hayotimni to‘ldirdi, xuddi xotira kitobidagi eng qimmat sahifalar kabi. Men tinglardim va o‘ylardim: nega bunchalik tanish tuyuladi bu ovoz? Xuddi uzoq vaqtdan beri kutgan suhbat, uzoq vaqtdan beri izlagan odam bilan gaplashayotgandek. Har bir so‘zing mening ichimdagi bo‘shliqni to‘ldirardi, har bir sukunat esa yangi ma’no kasb etardi.<br><br>
+            <strong>Nigina:</strong> Bilasanmi, men yolg‘izlikni yaxshi ko‘raman... lekin ba’zan u meni yeb qo‘yayotgandek tuyuladi, va men kimdir bilan chin dildan gaplashishni xohlayman.<br>
+            <strong>Men:</strong> Men ham shunday yashardim -  ko‘p odamlar atrofda, lekin hech kim yaqin emas edi. Sukunat ba’zan qo‘rquvga aylanardi. Sen paydo bo‘lgach... men nihoyat nafas oldim. Sen bilan sukunat ham gapira boshladi -  va bu gaplar chuqur, samimiy va ma’noli.
         </div>
 
         <div class="story-block">
-            Vaqt o'tdi -  xuddi romanning sekin rivojlanishi kabi. Bir kecha men o'zimni tuta olmadim -  his-tuyg'ular shu qadar kuchli ediki, so'zlar o'z-o'zidan chiqib ketdi, xuddi romanning kulminatsiya nuqtasi kabi -  u yerda hamma narsa ochiladi, va ortga qaytish yo'q.<br><br>
-            <strong>Men:</strong> Nigina... agar men aytib qo'ysamki, sen mening hayotimdagi eng muhim odamsan... sen nima der eding?<br>
-            <strong>Nigina:</strong> ...Men hozir nafas olmayapman. Chunki men ham shunday o'ylayman. Juda uzoq vaqtdan beri bu so'zlar ichimda edi.<br>
-            <strong>Men:</strong> Demak... bu ikki kishi bir-birini topib, endi yo'qotmaydi. Bu tasodif emas -  bu taqdir edi.
+            Vaqt o‘tdi -  xuddi romanning sekin rivojlanishi kabi. Bir kecha men o‘zimni tuta olmadim -  his-tuyg‘ular shu qadar kuchli ediki, so‘zlar o‘z-o‘zidan chiqib ketdi, xuddi romanning kulminatsiya nuqtasi kabi -  u yerda hamma narsa ochiladi, va ortga qaytish yo‘q.<br><br>
+            <strong>Men:</strong> Nigina... agar men aytib qo‘ysamki, sen mening hayotimdagi eng muhim odamsan... sen nima der eding?<br>
+            <strong>Nigina:</strong> ...Men hozir nafas olmayapman. Chunki men ham shunday o‘ylayman. Juda uzoq vaqtdan beri bu so‘zlar ichimda edi.<br>
+            <strong>Men:</strong> Demak... bu ikki kishi bir-birini topib, endi yo‘qotmaydi. Bu tasodif emas -  bu taqdir edi.
         </div>
 
         <div class="story-block">
-            Birinchi uchrashuv. Kuzgi park, barglar yerda xuddi eski kitob sahifalari kabi -  har biri o'z hikoyasini aytayotgandek. Sen oddiy palto kiyib, qo'llaringni cho'ntagingga solib turarding. Men yaqinlashdim va birdan tushundim: go'zallik -  bu faqat tashqi ko'rinish emas. Bu -  sening nigohingdagi tinchlik, sening harakatingdagi nafislik, sening sukunatingdagi kuch. Bu lahza mening xotiramda abadiy qoldi -  xuddi eng muhim sahifa kabi.<br><br>
+            Birinchi uchrashuv. Kuzgi park, barglar yerda xuddi eski manga sahifalari kabi -  har biri o‘z hikoyasini aytayotgandek. Sen oddiy palto kiyib, qo‘llaringni cho‘ntagingga solib turarding. Men yaqinlashdim va birdan tushundim: go‘zallik -  bu faqat tashqi ko‘rinish emas. Bu -  sening nigohingdagi tinchlik, sening harakatingdagi nafislik, sening sukunatingdagi kuch. Bu lahza mening xotiramda abadiy qoldi -  xuddi eng muhim sahifa kabi.<br><br>
             <strong>Men:</strong> Salom... sen haqiqatdan ham shu yerdasan, va bu lahza haqiqiy.<br>
-            <strong>Nigina:</strong> Salom... men ham shunday o'ylayapman. Xuddi tushdagidek, lekin bu tushning oxiri emas -  bu boshlanishi.<br>
+            <strong>Nigina:</strong> Salom... men ham shunday o‘ylayapman. Xuddi tushdagidek, lekin bu tushning oxiri emas -  bu boshlanishi.<br>
             <strong>Men:</strong> Keling, yuraylik. Hech qayerga shoshmaymiz. Vaqt bizniki.<br>
-            <strong>Nigina:</strong> Ha... vaqt bizniki, va bu yurish mening hayotimdagi eng muhim yurish bo'ladi.
+            <strong>Nigina:</strong> Ha... vaqt bizniki, va bu yurish mening hayotimdagi eng muhim yurish bo‘ladi.
         </div>
 
         <div class="story-block">
-            O'sha kundan keyin har bir kun -  bu davom etayotgan suhbat edi. So'zsiz lahzalar, qo'l ushlashlar, jimjitlikda bir-biriga qarashlar -  xuddi romanning eng muhim ichki monologlari kabi. So'zlar kerak emas edi -  faqat his-tuyg'ular yetarli edi. Men tushundim: sevgi -  bu ko'p gapirish emas. Bu -  birga sukut saqlay olish, va bu sukut mening hayotimni to'ldirdi, xuddi xotira bilan to'ldirilgan qadimiy kitob kabi.
+            O‘sha kundan keyin har bir kun -  bu davom etayotgan suhbat edi. So‘zsiz lahzalar, qo‘l ushlashlar, jimjitlikda bir-biriga qarashlar -  xuddi romanning eng muhim ichki monologlari kabi. So‘zlar kerak emas edi -  faqat his-tuyg‘ular yetarli edi. Men tushundim: sevgi -  bu ko‘p gapirish emas. Bu -  birga sukut saqlay olish, va bu sukut mening hayotimni to‘ldirdi, xuddi xotira bilan to‘ldirilgan qadimiy kitob kabi.
         </div>
 
         <div class="story-block">
-            Keyingi oylarda bizning munosabatlarimiz rivojlandi -  sekin, lekin qat'iy, xuddi yillar davomida o'sadigan daraxt kabi: ildizlari chuqur, shoxlari keng va mustahkam. Sen mening kunlarimni to'ldirarding, men sening sukunatingni, va har bir uchrashuv yangi hikoya edi -  unda hayotning eng chuqur ma'nolari ochilardi, xuddi kitobning yangi sahifasi kabi: har biri o'zining siri, go'zalligi va ma'nosi bilan.
+            Keyingi oylarda bizning munosabatlarimiz rivojlandi -  sekin, lekin qat’iy, xuddi yillar davomida o‘sadigan daraxt kabi: ildizlari chuqur, shoxlari keng va mustahkam. Sen mening kunlarimni to‘ldirarding, men sening sukunatingni, va har bir uchrashuv yangi hikoya edi -  unda hayotning eng chuqur ma’nolari ochilardi, xuddi kitobning yangi sahifasi kabi: har biri o‘zining siri, go‘zalligi va ma’nosi bilan.
         </div>
 
-        <div class="story-block" style="border-left-color: #ffccff; background: rgba(50,30,70,0.6);">
-            Hozir men shu satrlarni yozayotganimda ham seni o'ylayapman. Sen mening tinchligim, mening savollarimga javob, mening vaqtimning eng to'g'ri ma'nosi bo'lding. Bu sevgi vaqt o'tib yanada kuchayadi, yanada chuqurlashadi. Agar sen bu matnni o'qiyotgan bo'lsang -  bilgin: men seni sevaman. Sokin, chuqur, abadiy. Sen mening hayotimning asosi bo'lib qolding -  va bu asos hech qachon silkinmaydi.
+        <div class="story-block" style="border-left-color: #808080; background: rgba(50,50,50,0.55);">
+            Hozir men shu satrlarni yozayotganimda ham seni o‘ylayapman. Sen mening tinchligim, mening savollarimga javob, mening vaqtimning eng to‘g‘ri ma’nosi bo‘lding. Bu sevgi vaqt o‘tib yanada kuchayadi, yanada chuqurlashadi. Agar sen bu matnni o‘qiyotgan bo‘lsang -  bilgin: men seni sevaman. Sokin, chuqur, abadiy. Sen mening hayotimning asosi bo‘lib qolding -  va bu asos hech qachon silkinmaydi.
         </div>
 
-        <div style="text-align:center; margin-top:5rem;">
+        <div style="text-align:center; margin-top:4rem;">
             <button class="btn" onclick="back()">Orqaga</button>
         </div>
     </div>
@@ -336,40 +308,30 @@
 <!-- BEAUTY -->
 <div id="beauty" class="section" style="display:none;">
     <div class="panel">
-        <h2>Uning go'zalligi</h2>
-        <p class="subtitle">Har bir detal -  bu ichki dunyoning aksidir, go'zallik sir, tinchlik va chuqurlikning uyg'unligi.</p>
+        <h2>Uning go‘zalligi</h2>
+        <p class="subtitle">Go‘zallik -  bu nafaqat tashqi ko‘rinish, balki ichki dunyoning aksidir.</p>
 
         <div class="story-block">
             <strong>Sochi</strong><br>
-            Uzun, to'lqinli, quyosh nurida och jigarrang, soyada esa quyuq shokolad rangida. Shamol esganda ular xuddi mayin musiqa chalayotgandek harakatlanadi. Men ularni silaganimda vaqt sekinlashadi -  har bir lahza xotira bo'lib qoladi, har bir to'lqin sening tabiatingni aks ettiradi: erkin, lekin juda chuqur va sirli. Bu sochlar -  sening ichki erkinligingning ramzi.
+            Uzun, to‘lqinli, soyada quyuq, nurda ochroq. Shamol bilan harakatlanishi -  xuddi siyoh chizig‘i kabi, har bir to‘lqin sir va erkinlikni aks ettiradi.
         </div>
 
         <div class="story-block">
-            <strong>Ko'zlari</strong><br>
-            To'q jigarrang, ichida cheksiz tinchlik va biroz sir yashiringan. Ular menga qaraganda men o'zimni butunlay ochiq his qilaman -  yashirin hislarim, o'ylarim, qo'rquvlarim bilan birga. Har bir nigoh -  bu yangi sahifa, unda mening butun olamim aks etadi. Bu ko'zlar -  mening eng katta zaifligim va eng katta kuchim.
+            <strong>Ko‘zlari</strong><br>
+            Chuqur, tinch, ichida sir va sukunat. Ular menga qaraganda -  butun olam ko‘rinadi, va men o‘zimni butunlay ochiq his qilaman.
         </div>
 
         <div class="story-block">
             <strong>Tabassumi</strong><br>
-            Kam uchraydi, lekin har safar haqiqiy va kuchli. Bir marta paydo bo'lganda atrof yorishib ketadi -  xuddi quyosh bulutlar orasidan chiqqandek. Bu tabassum mening eng qorong'u kunlarimni ham yoritadi, va men uni har doim kutaman -  chunki u mening hayotimdagi eng muhim yorug'lik.
+            Kam, ammo haqiqiy. Bir marta paydo bo‘lganda -  sahifa yorishib ketadi, va bu yorug‘lik mening eng qorong‘u kunlarimni yoritadi.
         </div>
 
         <div class="story-block">
             <strong>Ovozi</strong><br>
-            Mayin, past, ammo ichki kuch va ishonchga ega. U gapirganda men faqat tinglashni xohlayman -  har bir so'zi mening ruhimni silaydi, xuddi eng sevimli musiqam kabi. Bu ovoz mening tinchligimning bir qismi bo'lib qoldi -  va men bu tinchliksiz yashay olmayman.
+            Mayin, past, ammo ichki kuchga ega. U gapirganda men tinglashdan boshqa hech narsani xohlamayman -  bu ovoz mening tinchligimning bir qismi.
         </div>
 
-        <div class="story-block">
-            <strong>Qiyofasi</strong><br>
-            Umumiy qiyofasi -  nafislik va ichki kuch aralashmasi. Sen yuraganda atrofingdagi havo o'zgaradi, vaqt sekinlashadi. Sen oddiy, lekin unutilmas -  xuddi hayotning eng muhim qahramoni kabi. Har bir harakating sening ichki olamingni ochib beradi.
-        </div>
-
-        <div class="story-block">
-            <strong>Qo'llari</strong><br>
-            Nozik, yumshoq, har bir imo-ishora sening his-tuyg'ularingni aniq ifodalaydi. Men bu qo'llarni ushlaganimda butun olam mening qo'limda bo'lib qoladi -  bu tuyg'u abadiy qoladi, va men bu tuyg'usiz yashay olmayman.
-        </div>
-
-        <div style="text-align:center; margin-top:5rem;">
+        <div style="text-align:center; margin-top:4rem;">
             <button class="btn" onclick="back()">Orqaga</button>
         </div>
     </div>
@@ -379,33 +341,29 @@
 <div id="why" class="section" style="display:none;">
     <div class="panel">
         <h2>Nega aynan u</h2>
-        <p class="subtitle">Chunki sevgi -  bu tasodif emas. Bu tanlov -  chuqur, o'ylangan, qat'iy tanlov. Va men bu tanlovni qildim -  va bu tanlov mening hayotimning ma'nosiga aylandi.</p>
+        <p class="subtitle">Chunki ba’zi odamlar shunchaki o‘tib ketmaydi -  ular qalbda iz qoldirib, keyin har bir nafasda qaytib keladi.</p>
 
         <div class="story-block">
-            Chunki u meni tinglaydi -  nafaqat so'zlarimni, balki ular orasidagi sukunatni, nafaslarimni, jimjitligimdagi o'ylarni ham. Bu tinglash mening hayotimni to'ldiradi, xuddi eng chuqur suhbat kabi -  unda so'zlar emas, ruh gapiradi.
+            Chunki u meni tinglaydi -  so‘zlarimni ham, sukunatimni ham. Bu tinglash mening hayotimni to‘ldiradi.
         </div>
 
         <div class="story-block">
-            Chunki u bilan yolg'izlik endi qo'rquv emas -  bu tanlov bo'lib qoldi. Men bu yolg'izlikni sevaman, chunki u mening bir qismim, va u bu yolg'izlikda ham yonimda -  sukunatda ham, jimjitlikda ham.
+            Chunki u bilan yolg‘izlik endi qo‘rquv emas -  bu tanlov bo‘lib qoldi.
         </div>
 
         <div class="story-block">
-            Chunki u mening zaif tomonlarimni ko'rib, ularni qoralamaydi -  aksincha, ular bilan birga bo'lishni xohlaydi. Bu mening eng katta qo'rquvimni yo'qotdi va meni haqiqiy kuchli qildi -  chunki zaiflikni qabul qilish -  bu eng katta kuch.
+            Chunki u mening zaifliklarim bilan birga bo‘lishni xohlaydi -  va bu meni haqiqiy kuchli qildi.
         </div>
 
         <div class="story-block">
-            Chunki u bilan vaqt boshqacha o'tadi -  u shunchaki o'tib ketmaydi, balki ma'no kasb etadi. Har bir soniya, har bir lahza -  muhim bo'lib qoladi. Va men bu vaqtni behuda o'tkazmayman.
+            Chunki u bilan vaqt ma’no kasb etadi -  har bir lahza muhim bo‘lib qoladi.
         </div>
 
         <div class="story-block">
-            Chunki u mening eng katta savolimga javob bo'ldi: «Nega yashash kerak?». Bu javob mening hayotimni o'zgartirdi -  endi men shunchaki yashamayman, men yashayman -  chuqur, to'la va mazmunli.
+            Chunki u mening eng katta savolimga javob bo‘ldi: «Nega yashash kerak?».
         </div>
 
-        <div class="story-block">
-            Chunki u mening ruhimning bir qismi bo'lib qoldi -  va bu qism hech qachon ajralmaydi. U mening abadiy tanlovim -  va bu tanlov mening hayotimning ma'nosiga aylandi.
-        </div>
-
-        <div style="text-align:center; margin-top:5rem;">
+        <div style="text-align:center; margin-top:4rem;">
             <button class="btn" onclick="back()">Orqaga</button>
         </div>
     </div>
@@ -415,18 +373,16 @@
 <div id="final" class="section" style="display:none;">
     <div class="panel">
         <h2>Och va his qil</h2>
-        <p style="margin:5rem 0; font-size:1.8rem; line-height:2.3; text-align:center;">
-            Agar sen hozir bu satrlarni o'qiyotgan bo'lsang...<br><br>
-            demak sen mening ichki dunyomga kirding -  u yerda faqat sen uchun joy bor edi, va bu joy mening hayotimning markazi bo'lib qoldi.<br><br>
-            Bu sahifalar, bu so'zlar, bu sukunat -  hammasi senga bag'ishlangan. Har bir satr, har bir nuqta -  sening uchun yozilgan va sening uchun saqlangan.<br>
-            Sen mening hayotimdagi eng katta topilma, eng muhim uchrashuv, eng to'g'ri tanlov bo'lding.<br><br>
+        <p style="margin:4rem 0; font-size:1.65rem; line-height:2.1; text-align:center;">
+            Agar sen hozir bu satrlarni o‘qiyotgan bo‘lsang...<br><br>
+            demak sen mening ichki dunyomga kirding -  u yerda faqat sen uchun joy bor edi.<br><br>
+            Bu sahifalar faqat senga bag‘ishlangan. Har bir satr, har bir sukunat -  sening uchun saqlangan.<br><br>
             Nigina...<br>
-            Men seni sevaman.<br>
-            Sokin. Chuqur. Vaqt va masofadan qat'i nazar -  abadiy.<br><br>
-            Sen mening oxirgi va eng to'g'ri tanlovimsan -  va bu tanlov mening hayotimni butunlay o'zgartirdi. Endi men shunchaki yashamayman -  men sen bilan yashayman, sen bilan o'ylayman, sen bilan nafas olaman. Sen mening olamimsan.
+            Sen mening hayotimdagi eng muhim iz bo‘lding.<br>
+            Sokin. Chuqur. Vaqt o‘tib ham o‘chmaydigan.
         </p>
 
-        <div style="text-align:center; margin-top:6rem;">
+        <div style="text-align:center; margin-top:5rem;">
             <button class="btn" onclick="back()">Orqaga</button>
         </div>
     </div>
@@ -442,8 +398,8 @@ function fadeInAudio() {
         const t = setInterval(() => {
             v += 0.004;
             music.volume = v;
-            if (v >= 0.32) clearInterval(t);
-        }, 300);
+            if (v >= 0.26) clearInterval(t);
+        }, 350);
     }).catch(()=>{});
 }
 
@@ -456,9 +412,8 @@ document.getElementById('loginForm').addEventListener('submit', e => {
             document.getElementById('login').style.display = 'none';
             document.getElementById('home').style.display = 'block';
             fadeInAudio();
-            createStars();
-            createSakura();
-        }, 2200);
+            createInkLines();
+        }, 1800);
     }
 });
 
@@ -467,43 +422,28 @@ function show(id) {
     document.querySelectorAll('.section').forEach(el => el.style.display = 'none');
     document.getElementById(id).style.display = 'block';
     window.scrollTo({top:0, behavior:'smooth'});
-    if (id === 'final') music.volume = 0.42;
+    if (id === 'final') music.volume = 0.38;
 }
 
 function back() {
     document.querySelectorAll('.section').forEach(el => el.style.display = 'none');
     document.getElementById('home').style.display = 'block';
-    music.volume = 0.32;
+    music.volume = 0.26;
 }
 
-// Звёзды
-function createStars() {
-    const container = document.getElementById('stars');
-    for (let i = 0; i < 120; i++) {
-        const star = document.createElement('div');
-        star.className = 'star';
-        star.style.width = star.style.height = (0.8 + Math.random() * 3) + 'px';
-        star.style.left = Math.random() * 100 + 'vw';
-        star.style.top = Math.random() * 100 + 'vh';
-        star.style.animationDelay = Math.random() * 8 + 's';
-        container.appendChild(star);
-    }
-}
-
-// Сакура лепестки (аниме-стиль)
-function createSakura() {
-    const container = document.getElementById('petals-container');
+// Чернильные линии/лепестки в стиле старой манги
+function createInkLines() {
+    const container = document.getElementById('ink-lines');
     setInterval(() => {
-        const petal = document.createElement('div');
-        petal.className = 'sakura-petal';
-        petal.style.left = Math.random() * 100 + 'vw';
-        petal.style.animationDuration = (18 + Math.random() * 18) + 's';
-        petal.style.animationDelay = Math.random() * 6 + 's';
-        petal.style.opacity = 0.6 + Math.random() * 0.3;
-        container.appendChild(petal);
+        const line = document.createElement('div');
+        line.className = 'ink-line';
+        line.style.left = Math.random() * 100 + 'vw';
+        line.style.animationDuration = (14 + Math.random() * 12) + 's';
+        line.style.animationDelay = Math.random() * 5 + 's';
+        container.appendChild(line);
 
-        setTimeout(() => petal.remove(), 50000);
-    }, 500); // каждые 0.5 секунды новый лепесток -  красиво и плавно
+        setTimeout(() => line.remove(), 30000);
+    }, 900);
 }
 </script>
 </body>
